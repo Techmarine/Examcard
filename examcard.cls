@@ -55,12 +55,12 @@
 %then type only question name
 {\textbf{\large{\thequestnum. #2 }}\par
 \DTLnewrow{List} %starting new row in the database
-\DTLnewdbentry{List}{ }{\stepcounter{listcounter}\thelistcounter. #2} %sending all data to the database
+\DTLnewdbentry{List}{quest}{\stepcounter{listcounter}\thelistcounter. #2} %sending all data to the database
 }
 %else type question name and class name (as written in option field)
 {\textbf{\large{\thequestnum.}} \textit{#1} \textbf{#2}\par
 \DTLnewrow{List} %starting new row in the database
-\DTLnewdbentry{List}{ }{\stepcounter{listcounter}\thelistcounter. \textit{#1} #2} %sending all data to the database
+\DTLnewdbentry{List}{quest}{\stepcounter{listcounter}\thelistcounter. \textit{#1} #2} %sending all data to the database
 }}  
 
 %Question title without number
@@ -71,12 +71,12 @@
 %then type only question name
 {\textbf{\large{#2 }}\par
 \DTLnewrow{List} %starting new row in the database
-\DTLnewdbentry{List}{ }{#2} %sending all data to the database
+\DTLnewdbentry{List}{quest}{#2} %sending all data to the database
 }
 %else type question name and class name (as written in option field)
 {\textit{#1} \textbf{#2}\par
 \DTLnewrow{List} %starting new row in the database
-\DTLnewdbentry{List}{ }{\textit{#1} #2} %sending all data to the database
+\DTLnewdbentry{List}{quest}{\textit{#1} #2} %sending all data to the database
 }}  
 
 %Card environment
@@ -96,6 +96,14 @@
 {\begin{minipage}[t][\cardheight][t]{\cardwidth}{\BODY}\end{minipage}}\vspace{1mm}} %card itself
 
 %Generate list
-\newcommand{\listgen}{\DTLdisplaylongdb{List}}
+\newcommand{\listgen}{%\DTLdisplaylongdb{List}
+
+\begin{longtable}{p{0.9\paperwidth}}
+\DTLforeach{List}{%
+\quest=quest}{%
+\\
+\quest}
+\end{longtable}
+}
 
 
