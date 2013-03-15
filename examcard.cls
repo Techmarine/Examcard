@@ -104,6 +104,7 @@
 \\
 \quest}
 \end{longtable}
+\setcounter{listcounter}{0} %This command resets counting in the list, so the list can be properly generated multiple times
 }
 
 
