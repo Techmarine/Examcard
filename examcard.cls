@@ -22,16 +22,13 @@
 \LoadClass{article}
 
 %Packages
-\usepackage{xifthen} %if-then-else
-\usepackage{environ} %this one helps in creating new environments
-\usepackage{dashbox} %this one makes dashed frames
-\usepackage{datatool} %this one works with databases
-\usepackage{longtable} %this one is required by datatool
+\RequirePackage{xifthen} %if-then-else
+\RequirePackage{environ} %this one helps in creating new environments
+\RequirePackage{dashbox} %this one makes dashed frames
+\RequirePackage{datatool} %this one works with databases
+\RequirePackage{longtable} %this one is required by datatool
 
 \DTLnewdb{List} %initializing new database
-
-%Page layout
-\usepackage[top=1cm,bottom=1cm,left=1cm,right=1cm]{geometry} 
 
 \pagestyle{empty} %no page numbering
 
@@ -45,6 +42,10 @@
 %Counters
 \newcounter{questnum} %question number counter 
 \newcounter{listcounter} %counter for generated list
+\newcounter{cardnum} %card number counter
+
+%Card header
+\newcommand{\cardhead}{\stepcounter{cardnum}\textbf{\large\textsf{\smallskip Card \thecardnum}}\par\hrule\medskip}
 
 %Question title with number
 \newcommand{\questname}[2][]
@@ -53,12 +54,12 @@
 %if option field is empty
 {\isempty{#1}} 
 %then type only question name
-{\textbf{\large{\thequestnum. #2 }}\par
+{\thequestnum. #2 \par
 \DTLnewrow{List} %starting new row in the database
 \DTLnewdbentry{List}{quest}{\stepcounter{listcounter}\thelistcounter. #2} %sending all data to the database
 }
 %else type question name and class name (as written in option field)
-{\textbf{\large{\thequestnum.}} \textit{#1} \textbf{#2}\par
+{\thequestnum. \textit{#1} #2\par
 \DTLnewrow{List} %starting new row in the database
 \DTLnewdbentry{List}{quest}{\stepcounter{listcounter}\thelistcounter. \textit{#1} #2} %sending all data to the database
 }}  
@@ -69,12 +70,12 @@
 %if option field is empty
 {\isempty{#1}} 
 %then type only question name
-{\textbf{\large{#2 }}\par
+{#2\par
 \DTLnewrow{List} %starting new row in the database
 \DTLnewdbentry{List}{quest}{#2} %sending all data to the database
 }
 %else type question name and class name (as written in option field)
-{\textit{#1} \textbf{#2}\par
+{\textit{#1} #2\par
 \DTLnewrow{List} %starting new row in the database
 \DTLnewdbentry{List}{quest}{\textit{#1} #2} %sending all data to the database
 }}  
