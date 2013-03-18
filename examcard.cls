@@ -39,46 +39,18 @@
 \newcommand{\setcardwidth}[1] %same here for width
 {\newcommand{\cardwidth}{#1}} 
 
-%Counters
-\newcounter{questnum} %question number counter 
-\newcounter{listcounter} %counter for generated list
-\newcounter{cardnum} %card number counter
 
 %Card header
-\newcommand{\cardhead}{\stepcounter{cardnum}\textbf{\large\textsf{\smallskip Card \thecardnum}}\par\hrule\medskip}
+\newcommand{\cardhead}[1]{\textbf{\large\textsf{\smallskip Card #1}}\par\hrule\medskip}
 
-%Question title with number
-\newcommand{\questname}[2][]
-{\stepcounter{questnum} %increase question number
-\ifthenelse
-%if option field is empty
-{\isempty{#1}} 
-%then type only question name
-{\thequestnum. #2 \par
+%Question command
+\newcommand{\quest}[3][NoClass]
+{#2. #3
 \DTLnewrow{List} %starting new row in the database
-\DTLnewdbentry{List}{quest}{\stepcounter{listcounter}\thelistcounter. #2} %sending all data to the database
+\DTLnewdbentry{List}{num}{#2} %Number entry
+\DTLnewdbentry{List}{quest}{#3} %Question entry
+\DTLnewdbentry{List}{class}{#1} %Class entry
 }
-%else type question name and class name (as written in option field)
-{\thequestnum. \textit{#1} #2\par
-\DTLnewrow{List} %starting new row in the database
-\DTLnewdbentry{List}{quest}{\stepcounter{listcounter}\thelistcounter. \textit{#1} #2} %sending all data to the database
-}}  
-
-%Question title without number
-\newcommand{\questnamenonum}[2][]
-{\ifthenelse
-%if option field is empty
-{\isempty{#1}} 
-%then type only question name
-{#2\par
-\DTLnewrow{List} %starting new row in the database
-\DTLnewdbentry{List}{quest}{#2} %sending all data to the database
-}
-%else type question name and class name (as written in option field)
-{\textit{#1} #2\par
-\DTLnewrow{List} %starting new row in the database
-\DTLnewdbentry{List}{quest}{\textit{#1} #2} %sending all data to the database
-}}  
 
 %Card environment
 \NewEnviron{card}
@@ -96,16 +68,23 @@
 \dashbox
 {\begin{minipage}[t][\cardheight][t]{\cardwidth}{\BODY}\end{minipage}}\vspace{1mm}} %card itself
 
-%Generate list
-\newcommand{\listgen}{%\DTLdisplaylongdb{List}
-
+%Generate full list
+\newcommand{\listgen}{%
+\DTLsort{num}{List} %sorting by number
 \begin{longtable}{p{0.9\paperwidth}}
-\DTLforeach{List}{%
-\quest=quest}{%
-\\
-\quest}
+\DTLforeach*{List} %iterating through the list
+{\num=num,\quest=quest} %assigning keys
+{\\\num. \quest} %typing
 \end{longtable}
-\setcounter{listcounter}{0} %This command resets counting in the list, so the list can be properly generated multiple times
 }
 
+%Generate list of a given class
+\newcommand{\classlist}[1]{%
+\DTLsort{num}{List} %sorting by number
+\begin{longtable}{p{0.9\paperwidth}}
+\DTLforeach*[\DTLiseq{\class}{#1}]{List} %filtering entries and iterating
+{\num=num, \quest=quest, \class=class} %assigning keys
+{\\\num. \quest} %typing
+\end{longtable}
+}
 
