@@ -71,20 +71,16 @@
 %Generate full list
 \newcommand{\listgen}{%
 \DTLsort{num}{List} %sorting by number
-\begin{longtable}{p{0.9\paperwidth}}
 \DTLforeach*{List} %iterating through the list
 {\num=num,\quest=quest} %assigning keys
 {\num. \quest\\} %typing
-\end{longtable}
 }
 
 %Generate list of a given class
 \newcommand{\classlist}[1]{%
 \DTLsort{num}{List} %sorting by number
-\begin{longtable}{p{0.9\paperwidth}}
 \DTLforeach*[\DTLiseq{\class}{#1}]{List} %filtering entries and iterating
 {\num=num, \quest=quest, \class=class} %assigning keys
 {\num. \quest\\} %typing
-\end{longtable}
 }
 
