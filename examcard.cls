@@ -74,7 +74,7 @@
 \begin{longtable}{p{0.9\paperwidth}}
 \DTLforeach*{List} %iterating through the list
 {\num=num,\quest=quest} %assigning keys
-{\\\num. \quest} %typing
+{\num. \quest\\} %typing
 \end{longtable}
 }
 
@@ -84,7 +84,7 @@
 \begin{longtable}{p{0.9\paperwidth}}
 \DTLforeach*[\DTLiseq{\class}{#1}]{List} %filtering entries and iterating
 {\num=num, \quest=quest, \class=class} %assigning keys
-{\\\num. \quest} %typing
+{\num. \quest\\} %typing
 \end{longtable}
 }
 
