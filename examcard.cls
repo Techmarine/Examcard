@@ -27,6 +27,7 @@
 \RequirePackage{dashbox} %this one makes dashed frames
 \RequirePackage{datatool} %this one works with databases
 \RequirePackage{longtable} %this one is required by datatool
+\RequirePackage{tikz} %this one is used in headers
 
 \DTLnewdb{List} %initializing new database
 
@@ -39,9 +40,12 @@
 \newcommand{\setcardwidth}[1] %same here for width
 {\newcommand{\cardwidth}{#1}} 
 
-
 %Card header
-\newcommand{\cardhead}[1]{\textbf{\large\textsf{\smallskip Card #1}}\par\hrule\medskip}
+\newcommand{\cardhead}[2][lime] %default color is lime
+{\begin{tikzpicture}
+\path [fill=#1] (0,0) rectangle (\cardwidth,1); %this is a background (width is set to \cardwidth, height is set to 1cm}
+\node [font=\sffamily, font =\Large, anchor=north west, yshift=0.8cm] at (0,0) {Card #2}; %text with number 
+\end{tikzpicture}\par}
 
 %Question command
 \newcommand{\quest}[3][NoClass]
