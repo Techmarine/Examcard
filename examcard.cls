@@ -28,6 +28,22 @@
 \RequirePackage{datatool} %this one works with databases
 \RequirePackage{longtable} %this one is required by datatool
 \RequirePackage{tikz} %this one is used in headers
+\RequirePackage[utf8x]{inputenc} %this one is for languages
+
+%Adaptive header translation
+\providecommand*{\tran}{Card}
+
+\AtBeginDocument{
+\@ifpackagewith{babel}{russian}{%
+\addto\captionsrussian{\renewcommand*\tran{Билет}}%
+}{}
+\@ifpackagewith{babel}{english}{%
+\addto\captionsenglish{\renewcommand*\tran{Card}}%
+}{}
+}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+\ProcessOptions\relax
+
 
 \DTLnewdb{List} %initializing new database
 
@@ -44,7 +60,7 @@
 \newcommand{\cardhead}[2][lime] %default color is lime
 {\begin{tikzpicture}
 \path [fill=#1] (0,0) rectangle (\cardwidth,1); %this is a background (width is set to \cardwidth, height is set to 1cm}
-\node [font=\sffamily, font =\Large, anchor=north west, yshift=0.8cm] at (0,0) {Card #2}; %text with number 
+\node [font=\sffamily, font =\Large, anchor=north west, yshift=0.8cm] at (0,0) {\tran~#2}; %text with number 
 \end{tikzpicture}\par}
 
 %Question command
