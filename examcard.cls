@@ -47,8 +47,6 @@
 
 \DTLnewdb{List} %initializing new database
 
-\pagestyle{empty} %no page numbering
-
 %The following commands let the user use his own sizes for the card.
 \newcommand{\setcardheight}[1] %this command sets height of the framebox
 {\newcommand{\cardheight}{#1}} %this is a string constant
